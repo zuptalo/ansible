@@ -3,3 +3,13 @@
   authorized_key:
     user: simone
     key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdQOpV1cCF0X9Wmf05UDTVz42hssuJejg9Hxs2pMRBtFwjPO0geGWBdtTBKw2OAxtHRGGrs1OSFB1+CQvn3Ipz1sTvC5ssDbzgx4V6I/7Evqr+qpbCidaJ0LeY4x6xW9lTry8OYSHjC33db3jD2zQh3GHpQcXmd8BDUoD3bREZdJkvnbDaEFvFJwWf5fClPJY6qZFWeTAOr2mF5s5uzWwDnkQfJ29fn9o4lELShohXocps+bvNYpCIfbYFNaS0zLOzd2WW4Bi763RxzUJnO2qFYHRXcRlji01Q2PHVKS70QSZS1/xY/4SVzE0NmxDp4UfAqG2+QKgNjTbHuW3evsAP MacBook Pro"
+
+- name: generate sshd_config file from template
+  tags: ssh
+  template:
+    src: "{{ ssh_template_file }}"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_sshd
