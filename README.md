@@ -1,20 +1,38 @@
 # Vagrant
 
 ### Start test VMs
+
 ```shell
 vagrant up
 ```
 
 ### Destroy test VMs
+
 ```shell
 vagrant destroy -f
 ```
 
 ---
 
-# Ansible (some sample commands)
+# Ansible
 
 ---
+
+### Bootstrap all the hosts in inventory by updating everything to latest and setting up the simone as the user on all
+
+```shell
+ansible-playbook bootstrap.yml --ask-become-pass
+```
+
+### Setting up the site after bootstrap is done
+
+```shell
+ansible-playbook site.yml
+```
+
+---
+
+# Some Sample Ansible Commands
 
 ### Check connection to all the hosts in inventory
 
@@ -37,41 +55,51 @@ ansible all -m gather_facts
 ### Gather all the facts about a specified host in inventory
 
 ```shell
-ansible all -m gather_facts --limit 10.0.1.240
+ansible all -m gather_facts --limit 10.0.1.150
 ```
 
-### Update apt cache on all the hosts in inventory
+### Update packages' index on all the hosts in inventory
 
 ```shell
-ansible all -m apt -a update_cache=true --become --ask-become-pass
+ansible all -m package -a update_cache=true --become --ask-become-pass
 ```
 
 ### Install tmux on all the hosts in inventory
 
 ```shell
-ansible all -m apt -a name=tmux --become
+ansible all -m package -a name=tmux --become
 ```
 
 ### Update snapd package to latest version on all the hosts in inventory
 
 ```shell
-ansible all -m apt -a "name=snapd state=latest" --become
+ansible all -m package -a "name=snapd state=latest" --become
 ```
 
-### Upgrade distro on all the hosts in inventory
+### Upgrade distro on db_servers the hosts in inventory
 
 ```shell
-ansible all -m apt -a "upgrade=dist" --become
+ansible db_servers -m apt -a "upgrade=dist" --become
 ```
 
-### Install apache server on all the hosts in inventory
+---
+
+# Python
+
+### Create the virtual environment
 
 ```shell
-ansible-playbook install_apache.yml
+python3 -m venv .venv
 ```
 
-### Remove apache server from all the hosts in inventory
+### Activate the virtual environment
 
 ```shell
-ansible-playbook remove_apache.yml
+source .venv/bin/activate
+```
+
+### Generate project context JSON to be used when chatting with AI
+
+```shell
+python ai.py
 ```

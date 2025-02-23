@@ -1,2 +1,4 @@
-/.idea/
-/.vagrant/
+.idea
+.vagrant
+.venv
+project_context.json
