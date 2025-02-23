@@ -1,12 +1,20 @@
+# Generate SSH key for ansible
+
+```shell
+ssh-keygen -f ~/.ssh/ansible -N ''
+```
+
+---
+
 # Vagrant
 
-### Start test VMs
+- Start test VMs
 
 ```shell
 vagrant up
 ```
 
-### Destroy test VMs
+- Destroy test VMs
 
 ```shell
 vagrant destroy -f
@@ -18,13 +26,19 @@ vagrant destroy -f
 
 ---
 
-### Bootstrap all the hosts in inventory by updating everything to latest and setting up the simone as the user on all
+- First lets see if we can ping all the hosts after vagrant up is finished
 
 ```shell
-ansible-playbook bootstrap.yml --ask-become-pass
+ansible all -m ping -u vagrant
 ```
 
-### Setting up the site after bootstrap is done
+- Now lets bootstrap all the hosts in inventory by updating everything to latest and setting up the ansible as a user on all
+
+```shell
+ansible-playbook bootstrap.yml -u vagrant
+```
+
+- Now that we have the hosts bootstrapped, lets set the site up
 
 ```shell
 ansible-playbook site.yml
@@ -32,51 +46,51 @@ ansible-playbook site.yml
 
 ---
 
-# Some Sample Ansible Commands
+# Sample Ansible Commands
 
-### Check connection to all the hosts in inventory
+- Check connection to all the hosts in inventory
 
 ```shell
 ansible all -m ping
 ```
 
-### See all the servers defined in inventory
+- See all the servers defined in inventory
 
 ```shell
 ansible all --list-hosts
 ```
 
-### Gather all the facts about all the hosts in inventory
+- Gather all the facts about all the hosts in inventory
 
 ```shell
 ansible all -m gather_facts
 ```
 
-### Gather all the facts about a specified host in inventory
+- Gather all the facts about a specified host in inventory
 
 ```shell
 ansible all -m gather_facts --limit 10.0.1.150
 ```
 
-### Update packages' index on all the hosts in inventory
+- Update packages' index on all the hosts in inventory
 
 ```shell
 ansible all -m package -a update_cache=true --become --ask-become-pass
 ```
 
-### Install tmux on all the hosts in inventory
+- Install tmux on all the hosts in inventory
 
 ```shell
 ansible all -m package -a name=tmux --become
 ```
 
-### Update snapd package to latest version on all the hosts in inventory
+- Update snapd package to latest version on all the hosts in inventory
 
 ```shell
 ansible all -m package -a "name=snapd state=latest" --become
 ```
 
-### Upgrade distro on db_servers the hosts in inventory
+- Upgrade distro on db_servers the hosts in inventory
 
 ```shell
 ansible db_servers -m apt -a "upgrade=dist" --become
@@ -86,19 +100,19 @@ ansible db_servers -m apt -a "upgrade=dist" --become
 
 # Python
 
-### Create the virtual environment
+- Create the virtual environment
 
 ```shell
 python3 -m venv .venv
 ```
 
-### Activate the virtual environment
+- Activate the virtual environment
 
 ```shell
 source .venv/bin/activate
 ```
 
-### Generate project context JSON to be used when chatting with AI
+- Generate project context JSON to be used when chatting with AI
 
 ```shell
 python ai.py

@@ -1,4 +1,5 @@
 .idea
 .vagrant
 .venv
+.ssh
 project_context.json
