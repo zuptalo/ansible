@@ -1,2 +1,2 @@
-10.0.1.150
-10.0.1.151
+10.0.1.150 apache_package=apache2 php_package=libapache2-mod-php
+10.0.1.151 apache_package=httpd php_package=php
