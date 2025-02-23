@@ -14,6 +14,18 @@ ssh-keygen -f ~/.ssh/ansible -N ''
 vagrant up
 ```
 
+- Suspend test VMs
+
+```shell
+vagrant suspend
+```
+
+- Resume test VMs
+
+```shell
+vagrant resume
+```
+
 - Destroy test VMs
 
 ```shell
